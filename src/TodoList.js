@@ -11,6 +11,20 @@ class TodoList extends Component {
     };
     this.handleAdd = this.handleAdd.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+  }
+  handleUpdate(updatedTodo) {
+    let { key } = updatedTodo;
+    this.setState((prevState) => {
+      return {
+        todos: prevState.todos.map((element) => {
+          if (element.key !== key) {
+            return element;
+          }
+          return updatedTodo;
+        }),
+      };
+    });
   }
   handleRemove(key) {
     this.setState((prevState) => {
@@ -45,6 +59,7 @@ class TodoList extends Component {
               key={element.key}
               index={element.key}
               onDelete={this.handleRemove}
+              onUpdate={this.handleUpdate}
             />
           ))}
         </ul>
