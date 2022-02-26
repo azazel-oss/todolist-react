@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import "./Todo.css";
 
 class Todo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isCompleted: false,
       isEditing: false,
       todoText: this.props.text,
     };
@@ -11,6 +13,14 @@ class Todo extends Component {
     this.toggleForm = this.toggleForm.bind(this);
     this.handleEditChange = this.handleEditChange.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleToggleComplete = this.handleToggleComplete.bind(this);
+  }
+  handleToggleComplete() {
+    this.setState((prevState) => {
+      return {
+        isCompleted: !prevState.isCompleted,
+      };
+    });
   }
   handleUpdate(e) {
     e.preventDefault();
@@ -54,7 +64,12 @@ class Todo extends Component {
           </div>
         ) : (
           <div>
-            {this.props.text}
+            <span
+              onClick={this.handleToggleComplete}
+              className={this.state.isCompleted ? "todo_complete" : ""}
+            >
+              {this.props.text}
+            </span>
             <button onClick={this.toggleForm}>Edit todo</button>
             <button onClick={this.handleDelete}>Delete todo</button>
           </div>
